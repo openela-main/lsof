@@ -1,0 +1,10 @@
+diff -up ./Lsof.8.ori ./Lsof.8
+--- ./Lsof.8.ori	2019-05-28 15:32:49.945667234 +0200
++++ ./Lsof.8	2019-05-28 15:33:06.182865931 +0200
+@@ -1,5 +1,5 @@
+ .so ./version
+-.TH LSOF 8 Revision-\*(VN
++.TH LSOF 1 Revision-\*(VN
+ \" Register )P is used neither by this file nor any groff macro.  However,
+ \" some versions of nroff require it.
+ .if !\n(.g \{\
