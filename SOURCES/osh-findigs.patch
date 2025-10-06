@@ -1,0 +1,13 @@
+diff --git a/arg.c b/arg.c
+index cd3d5b1..6551e65 100644
+--- a/arg.c
++++ b/arg.c
+@@ -1830,6 +1830,8 @@ enter_network_address(na)
+ 	}
+ 	if (sn)
+ 	    (void) free((FREE_P *)sn);
++	if (hn)
++	    free (hn);
+ 	return(0);
+ }
+ 
