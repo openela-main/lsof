@@ -1,7 +1,7 @@
 Summary: A utility which lists open files on a Linux/UNIX system
 Name: lsof
 Version: 4.94.0
-Release: 3%{?dist}
+Release: 4%{?dist}
 # Sendmail .. lib/snpf.c
 # LGPLv2+  .. lib/regex.c, regex.h
 License: zlib and Sendmail and LGPLv2+
@@ -19,6 +19,8 @@ Source1: upstream2downstream.sh
 
 # BZ#1260300 - move lsof man page to section 1
 Patch0: lsof-man-page-section.patch
+# RHEL-154768 - lsof spins on the CPU forever when *nofile* limit is high
+Patch1: lsof-close_range.patch
 
 BuildRequires: gcc
 BuildRequires: libselinux-devel
@@ -33,6 +35,7 @@ about files that are open by the processes running on a UNIX system.
 %prep
 %setup -q -n %{lsofrh}
 %patch0 -p1 -b .man-page-section
+%patch1 -p1 -b .lsof-close_range
 
 %build
 ./Configure -n linux
@@ -52,6 +55,10 @@ install -p -m 0644 lsof.1 ${RPM_BUILD_ROOT}%{_mandir}/man1/lsof.1
 %{_mandir}/man*/*
 
 %changelog
+* Fri Jul 03 2026 Siteshwar Vashisht <svashisht@redhat.com> - 4.94.0-4
+- Make start up more efficient by using close_range() to close fds
+  Resolves: RHEL-154768
+
 * Mon Aug 09 2021 Mohan Boddu <mboddu@redhat.com> - 4.94.0-3
 - Rebuilt for IMA sigs, glibc 2.34, aarch64 flags
   Related: rhbz#1991688
